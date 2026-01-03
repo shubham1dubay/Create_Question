@@ -1,22 +1,19 @@
-import express from "express";
-import dotenv from "dotenv";
-import questionRoutes from "./routes/question.routes";
-import { setupSwagger } from "./swagger";
-
-dotenv.config();
+import express from 'express';
+import questionRoutes from './routes/question.routes';
+import questionTypeRoutes from './routes/question.routes'; // ✅ new
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger/swagger.json';
 
 const app = express();
+
 app.use(express.json());
 
-// Routes
-app.use("/api", questionRoutes);
+// Existing question CRUD API
+app.use('/api', questionRoutes);
 
-// Swagger
-setupSwagger(app);
+// New Question Type config API
+app.use('/api/question-types', questionTypeRoutes); // ✅
 
-// Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`Swagger docs: http://localhost:${PORT}/api-docs`);
-});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+export default app;

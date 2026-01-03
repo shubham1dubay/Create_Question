@@ -1,16 +1,16 @@
-import express from 'express';
-import {
-    saveBasicInfo,
-    saveContent,
-    saveSettings,
-    finalizeQuestion
-} from '../controllers/question.controller';
+import { Router } from 'express';
+import { getQuestionTypeConfig, createQuestion } from '../controllers/question.controller';
+import { upload } from '../middlewares/upload.middleware';
 
-const router = express.Router();
+const router = Router();
 
-router.post('/questions/basic-info', saveBasicInfo);
-router.post('/questions/content', saveContent);
-router.post('/questions/settings', saveSettings);
-router.post('/questions/review', finalizeQuestion);
+// Get all question types
+//router.get('/question-types', getQuestionTypes);
+
+// Get template for a question type
+router.get('/question-template/:type', getQuestionTypeConfig);
+
+// Create a question
+router.post('/questions', upload.any(), createQuestion);
 
 export default router;

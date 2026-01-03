@@ -1,0 +1,49 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Question API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/question-types": {
+            "get": {
+                "summary": "Get all question types",
+                "responses": {
+                    "200": {
+                        "description": "List of types"
+                    }
+                }
+            }
+        },
+        "/api/question-template/{type}": {
+            "get": {
+                "summary": "Get question template by type",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Template"
+                    }
+                }
+            }
+        },
+        "/api/questions": {
+            "post": {
+                "summary": "Create a new question",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    }
+}
